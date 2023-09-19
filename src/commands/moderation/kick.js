@@ -22,7 +22,7 @@ module.exports = {
         }
 
         if(targetUser.id === interaction.guild.ownerId){
-            await interaction.editReply("You can't ban them, they're the server owner!");
+            await interaction.editReply("You can't kick them, they're the server owner!");
             return;
         }
 
@@ -33,46 +33,46 @@ module.exports = {
         //console.log(interactions.guild.members);
         // compare roles
         if(targetUserRolePosition >= requestUserRolePosition){
-            await interaction.editReply("You can't ban that user, they have the same/greater role than you.");
+            await interaction.editReply("You can't kick that user, they have the same/greater role than you.");
             return;
         }
 
         if(targetUserRolePosition >= botRolePosition){
-           await interaction.editReply("I can't ban this user because they have the same/greater role than me");
+           await interaction.editReply("I can't kick this user because they have the same/greater role than me");
            return;
         }
 
         // ban the targetUser
         try {
-            await targetUser.ban({ reason });
-            await interaction.editReply(`User ${targetUser} was banned. \nReason: ${reason}`);
+            await targetUser.kick(reason);
+            await interaction.editReply(`User ${targetUser} was kicked. \nReason: ${reason}`);
         } catch (error) {
             console.log(`There was an error when banning: ${error}`);
         }
     },
 
     //deleted: true,
-    name: 'ban',
-    description: 'bans a member from the server >:0',
+    name: 'kick',
+    description: 'kicks a member from the server >:0',
     // devOnly: Boolean,
     // testOnly: Boolean,
     options: [
         {
             name: 'target-user',
-            description: 'the user to ban',
+            description: 'the user to kick',
             required: true,
             type: ApplicationCommandOptionType.Mentionable,
         },
         {
             name: 'reason',
-            description: 'the reason for banning',
+            description: 'the reason for kicking',
             //required: true,
             type: ApplicationCommandOptionType.String,
         },
     ],
 
-    permissionsRequired : [PermissionsBitField.Flags.BanMembers],
-    botPermissions : [PermissionsBitField.Flags.BanMembers],
+    permissionsRequired : [PermissionsBitField.Flags.KickMembers],
+    botPermissions : [PermissionsBitField.Flags.KickMembers],
 
     
 };
